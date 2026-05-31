@@ -1,0 +1,30 @@
+@host = http://localhost:8080
+
+### GET all books
+GET {{host}}/api/books
+Accept: application/json
+
+### POST a book with correct body
+POST {{host}}/api/books
+Content-Type: application/json
+
+{
+  "title": "{{$random.book.title}}",
+  "author": "{{$random.name.fullName}}",
+  "isbn": "{{$random.code.isbn10}}",
+  "pages": {{$random.integer(5, 2500)}},
+  "rating": {{$random.integer(1, 5)}}
+}
+
+### POST a book with error
+POST {{host}}/api/books
+Content-Type: application/json
+
+{
+  "title": "",
+  "author": "{{$random.name.fullName}}",
+  "isbn": "{{$random.code.isbn10}}",
+  "pages": {{$random.integer(5, 2500)}},
+  "rating": {{$random.integer(1, 5)}}
+}
+
