@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --bg: #0a0a0a;
+  --bg-subtle: #111111;
+  --bg-muted: #1a1a1a;
+
+  --border: #262626;
+  --border-subtle: #1f1f1f;
+
+  --text: #ededed;
+  --text-muted: #a1a1a1;
+  --text-faint: #525252;
+
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+
+  --danger: #ef4444;
+  --success: #22c55e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+}
+
