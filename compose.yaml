@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: booktracker-postgres
+    environment:
+      POSTGRES_DB: booktracker
+      POSTGRES_USER: booktracker
+      POSTGRES_PASSWORD: booktracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U booktracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: BookTracker.Api
+      dockerfile: Dockerfile
+    container_name: booktracker-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=booktracker;Username=booktracker;Password=booktracker
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ui:
+    build:
+      context: BookTracker.Ui
+      dockerfile: Dockerfile
+    container_name: booktracker-ui
+    ports:
+      - "5173:5173"
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      - VITE_API_URL=http://localhost:8080/api/books
+
+volumes:
+  postgres_data:
