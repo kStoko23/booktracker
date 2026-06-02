@@ -28,7 +28,9 @@ public static class BooksEndpoints
                 EF.Functions.Like(x.Title, pattern) || 
                 EF.Functions.Like(x.Author, pattern));
         }
-
+        
+        var totalCount = await query.CountAsync();
+        
         var books = await query
             .OrderByDescending(x => x.CreatedAt)
             .Skip((page - 1) * pageSize)
@@ -44,7 +46,13 @@ public static class BooksEndpoints
             })
             .ToListAsync();
         
-        return Results.Ok(books);
+        return Results.Ok(new
+        {
+            items = books,
+            totalCount,
+            page,
+            pageSize
+        });
     }
 
     private static async Task<IResult> CreateBook(BooksDbContext db, [FromBody] CreateBookRequest request)
