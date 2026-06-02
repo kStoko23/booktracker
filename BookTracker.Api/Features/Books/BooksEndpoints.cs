@@ -23,10 +23,10 @@ public static class BooksEndpoints
 
         if (!string.IsNullOrWhiteSpace(parameters.Search))
         {
-            var pattern = $"{parameters.Search.Trim()}%";
+            var pattern = $"%{parameters.Search.Trim()}%";
             query = query.Where(x => 
-                EF.Functions.Like(x.Title, pattern) || 
-                EF.Functions.Like(x.Author, pattern));
+                EF.Functions.ILike(x.Title, pattern) || 
+                EF.Functions.ILike(x.Author, pattern));
         }
         
         var totalCount = await query.CountAsync();
